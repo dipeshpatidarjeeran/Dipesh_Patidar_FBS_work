@@ -7,3 +7,9 @@
 # without returning value
 
 #3.
+#without passing perameter
+#with returning value
+
+#4.
+# with passing perameter
+# with returning value
