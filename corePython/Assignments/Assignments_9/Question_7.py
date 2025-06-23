@@ -1,11 +1,11 @@
 """
     Write a program to find sum of digits using recursion.
 """
-def sumOfDigit(n,sum=0):
+def sumOfDigit(n):
     if n==0:
-        return sum
+        return 0
     else:
-        return sumOfDigit(n//10,sum + n%10)
+        return n%10+sumOfDigit(n//10)
     
 n = int(input("enter the number:-"))
 print("sum of digit:-",sumOfDigit(n))
