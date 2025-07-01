@@ -1,16 +1,26 @@
 str1 = "FirstBit Solutions"
-input_str = "Bit"
+input_str = "irs"
 replace_str = "Byte"
+count = 0
 str2 = ''
-if input_str in str1:
-    for i in str1:
-        if i not in input_str:
-            str2 += i
-        else:
-            if input_str[0] == i:
-                str2 += replace_str
-            # else:
-            #     str2 += i
-    print(str2)
-else:
-    print(str1)
+ex = ''
+li =[]
+for i in range(len(str1)):
+    if str1[i] == input_str[count]:
+        ex += str1[i]
+        li.append(i)
+        count += 1
+        if ex == input_str:
+            break
+    else:
+        ex = ''
+        li = []
+        count = 0
+
+for i in range(len(str1)):
+    if i == li[0]:
+        str2 += replace_str
+    if i not in li:
+        str2 += str1[i]
+
+print(str2)
