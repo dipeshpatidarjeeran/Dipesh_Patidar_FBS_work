@@ -5,6 +5,8 @@ count = 0
 str2 = ''
 ex = ''
 li =[]
+
+#just to check position of old string
 for i in range(len(str1)):
     if str1[i] == input_str[count]:
         ex += str1[i]
@@ -17,6 +19,7 @@ for i in range(len(str1)):
         li = []
         count = 0
 
+#to replace new string with old string
 for i in range(len(str1)):
     if i == li[0]:
         str2 += replace_str
