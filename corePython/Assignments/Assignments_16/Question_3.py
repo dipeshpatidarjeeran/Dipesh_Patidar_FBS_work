@@ -8,29 +8,28 @@
 #     xlarge=1300) Use static concept.
 
 class Shirt:
-    small = 1.0
-    medium = 1.1
-    large = 1.2
-    xlarge = 1.3
+    medium = 0.1
+    large = 0.2
+    xlarge = 0.3
     def __init__(self,sid,sname,size,type='formal',price=300):
         self.sname = sname
         self.sid = sid
-        self.price = price
         self.type = type
         self.size = size
 
-    def showShirt(self):
         if self.size == "small":
-            self.price *= Shirt.small
+            self.size = price
 
         elif self.size == "medium":
-            self.price *= Shirt.medium
+            self.price = price+(price*Shirt.medium)
 
         elif self.size == "large":
-            self.price *= Shirt.large
+            self.price = price + (price*Shirt.large)
 
         elif self.size == "xlarge":
-            self.price *= Shirt.xlarge
+            self.price = price + (price*Shirt.xlarge)
+
+    def showShirt(self):
         
         print("shirt Id:",self.sid)
         print("short Name:",self.sname)
