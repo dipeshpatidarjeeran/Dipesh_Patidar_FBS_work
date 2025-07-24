@@ -1,0 +1,4 @@
+101, dipesh, 24, DS, 35000.0
+
+103, raj, 25, DA, 25000.0
+104, Prahalad, 48, Python Developer, 50000000.0

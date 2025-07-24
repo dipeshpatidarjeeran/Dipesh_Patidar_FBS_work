@@ -9,12 +9,23 @@ while(ch != '2'):
     if(ch == '1'):
         uid = input("Enter the admin Id:-")
         passw = input("Enter the Password:-")
-        if uid == 'admin' and passw == '1234':
-            print("logged in  successful...")
-            admin = Admin()
+        try:
+            with open("Projects/EMS/admin.txt", 'r') as fp:
+                adData = fp.read()
+                adList = adData.split(", ")
+
+        except FileNotFoundError as e:
+            ch = '2'
+            print("error:",e)
+
         else:
-            print("Invalid credentials...")
+            if uid == adList[0] and passw == adList[1]:
+                print("logged in  successful...")
+                admin = Admin()
+            else:
+                print("Invalid credentials...")
+                
     elif(ch == '2'):
-        print("Thank for chocing us!")
+        print("Thankyou for Visiting!")
     else:
         print("Invalid choice...Please try again")

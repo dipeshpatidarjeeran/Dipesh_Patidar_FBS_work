@@ -15,18 +15,18 @@ class Complex:
     def __add__(self, other):
         real = self.real + other.real
         imag = self.imag + other.imag
-        return f'{real} + {imag}j'
+        return f'{real} + {imag}'
 
     def __sub__(self, other):
         real = self.real - other.real
         imag = self.imag - other.imag
-        return f'{real} + {imag}j'
+        return f'{real} + {imag}'
 
     def display(self):
-        return f"{self.real} + {self.imag}j"
+        return f"{self.real} + {self.imag}"
 
-c1 = Complex(10,20)
-c2 = Complex(3,15)
+c1 = Complex(10,20j)
+c2 = Complex(3,15j)
 
 c3 = c1 + c2
 print(c3)
