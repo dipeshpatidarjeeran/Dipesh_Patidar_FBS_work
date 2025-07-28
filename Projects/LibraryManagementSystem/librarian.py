@@ -45,7 +45,7 @@ class Librarian:
                 im.issue_book()
             
             elif(ch == '8'):
-                pass
+                im.return_book()
 
             elif(ch == '9'):
                 pass

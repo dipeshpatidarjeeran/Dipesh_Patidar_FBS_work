@@ -60,3 +60,64 @@ class IssueMangement:
 
             else:
                 print("Book not found or Book Not Available....")
+
+    def return_book(self):
+        mid = input("Enter the Member Id:- ")
+        bid = input("Enter the Book Id:- ")
+
+        try:
+            with open("Projects/LibraryManagementSystem/data/bookDetails.txt", "r") as fp:
+                bData = fp.read()
+                bList = bData.split("\n")
+            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+                mData = fp.read()
+                mList = mData.split("\n")
+            with open("Projects/LibraryManagementSystem/data/issueBook.txt", "r") as fp:
+                iData = fp.read()
+                isulist = iData.split("\n")
+                
+        except FileNotFoundError as e:
+            print("error:",e)
+        else:
+            for issue in isulist:
+                iList = issue.split(", ")
+                
+                if iList[0] == mid and iList[1] == bid:
+                    return_date = datetime.date.today()
+                    issue_date = datetime.datetime.strptime(iList[2], '%Y-%m-%d').date()
+                    days = (return_date - issue_date).days
+                    fine = days * 10 if days > 5 else 0
+                    if fine > 0:
+                        for member in mList:
+                            if mid in member.split(", ")[0]:
+                                memberList = member.split(", ")
+                                memberList[4] = int(memberList[4]) + fine
+                                updateM = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}'
+                                data = mData.replace(member, updateM)
+                                with open("Projects/LibraryManagementSystem/data/member.txt", "w") as fp:
+                                    fp.write(data)
+                                    break
+
+                    for book in bList:
+                        booklist = book.split(", ")
+                        # import pdb;pdb.set_trace()
+                        if booklist[0] == bid:
+                            booklist[4] = int(booklist[4]) - 1
+                            booklist[5] = "available"
+                            updateb = f'{booklist[0]}, {booklist[1]}, {booklist[2]}, {booklist[3]}, {booklist[4]}, {booklist[5]}'
+                            data = bData.replace(book, updateb)
+                            with open("Projects/LibraryManagementSystem/data/bookDetails.txt", "w") as fp:
+                                fp.write(data)
+                                break
+
+                    for issue in isulist:
+                        issueList = issue.split(", ")
+                        if mid == issueList[0] and bid == issueList[1]:
+                            data = iData.replace(issue, "")
+                            with open("Projects/LibraryManagementSystem/data/issueBook.txt", "w") as fp:
+                                fp.write(data)
+                            print(f"✅ Book returned successfully. Fine charged: ₹{fine}")
+                            break
+                    break
+            else:
+                print("❌ Book not issued ")
