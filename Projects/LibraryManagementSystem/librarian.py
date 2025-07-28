@@ -8,7 +8,7 @@ im = IssueMangement()
 class Librarian:
     def __init__(self):
         ch = 0 
-        while(ch != '10'):
+        while(ch != '11'):
             print("""Please select choice
                 1. Add Book
                 2. Search Book
@@ -19,7 +19,8 @@ class Librarian:
                 7. Issue Book
                 8. Return Book
                 9. View Issued Books
-                10. logout""")
+                10. Remove Member
+                11. logout""")
             
             ch = input("Enter the choice:-")
 
@@ -48,9 +49,12 @@ class Librarian:
                 im.return_book()
 
             elif(ch == '9'):
-                pass
+                im.show_issued_book()
 
             elif(ch == '10'):
+                m.deleteMember()
+
+            elif(ch == '11'):
                 print("logout successful...")
 
             else:

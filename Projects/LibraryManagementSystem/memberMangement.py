@@ -1,18 +1,21 @@
 from tabulate import tabulate
 from member import Member
+from validation_path import path, valid_member_id
+
 
 class MemberManagement:
     headers = ["ID", "Name", "Branch", "Phone", "Fine"]
 
     def addMember(self):
         Id = input("Enter the Member ID:-")
+        new_id = valid_member_id(Id)
         name = input("Enter the Member Name:-")
         branch = input("Enter the Branch:-")
         phone = int(input("Enter the Phone Number:-"))
         fine = 0
-        m1 = Member(Id, name, branch, phone, fine)
+        m1 = Member(new_id, name, branch, phone, fine)
 
-        with open("Projects/LibraryManagementSystem/data/member.txt", 'a') as fp:
+        with open(path + "member.txt", 'a') as fp:
             fp.write(str(m1)+"\n")
             print("Successfully Add Member...")
 
@@ -22,7 +25,7 @@ class MemberManagement:
         Id = input("Enter the Member Id:-")
 
         try:
-            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+            with open(path + "member.txt", "r") as fp:
                 mData = fp.read()
                 mList = mData.split("\n")
 
@@ -43,7 +46,7 @@ class MemberManagement:
     def updateMember(self):
         Id = input("Enter the member Id:-")
         try:
-            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+            with open(path + "member.txt", "r") as fp:
                 mData = fp.read()
                 mList = mData.split("\n")
 
@@ -73,7 +76,7 @@ class MemberManagement:
                     updateMember = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}'
                     data = mData.replace(member, updateMember)
 
-                    with open("Projects/LibraryManagementSystem/data/member.txt", "w") as fp:
+                    with open(path + "member.txt", "w") as fp:
                         fp.write(data)
                         print("Successfully Update Member")
                         break
@@ -84,20 +87,27 @@ class MemberManagement:
     def deleteMember(self):
         Id = input("Enter the Member Id:-")
         try:
-            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+            with open(path + "member.txt", "r") as fp:
                 allData = fp.read()
-                mData = allData.split("\n")
+                mData = allData.strip().split("\n")
+
+            with open(path + "issueBook.txt", "r") as fp:
+                issueData = fp.read()
+                iData = issueData.strip().split("\n")
 
         except FileNotFoundError as e:
             print("error:",e)
         else:
-            for Member in mData:
-                if Id in Member:
-                    data = allData.replace(Member, "")
-                    with open("Projects/LibraryManagementSystem/data/member.txt", "w") as fp:
-                        fp.write(data)
-                    print("Successfully Delete Member Details")
-                    break
+            for issue in iData:
+                if Id == issue.split(", ")[0]:
+                    print("❌ Member cannot be deleted. Book is still issued")
+                    return
+            
+            new_mData = [member for member in mData if Id not in member]
+            if len(new_mData) != len(mData):
+                with open(path + "member.txt", "w") as fp:
+                    fp.write("\n".join(new_mData))
+                print("Successfully Delete Member Details")
             else:
                 print("Member not found.")
 
@@ -105,7 +115,7 @@ class MemberManagement:
     def showAllMember(self):
         table_data = []
         try:
-            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+            with open(path + "member.txt", "r") as fp:
                 allData = fp.read()
 
         except FileNotFoundError as e:

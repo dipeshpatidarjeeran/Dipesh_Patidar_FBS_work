@@ -1,7 +1,8 @@
-import time
+import time, getpass
 from colorama import Fore, Style
 from pyfiglet import figlet_format
 from librarian import Librarian
+from validation_path import path
 ch = 0 
 banner = figlet_format("L M S", font="slant")
 print(Fore.CYAN + Style.BRIGHT + banner + Style.RESET_ALL)
@@ -15,9 +16,9 @@ while(ch != '2'):
 
     if(ch == '1'):
         eid = input("Enter the Email Id:-")
-        passw = input("Enter the Password:-")
+        passw = getpass.getpass("Enter the Password:-")
         try:
-            with open("Projects/LibraryManagementSystem/data/admin.txt", 'r') as fp:
+            with open(path + "admin.txt", 'r') as fp:
                 adData = fp.read()
                 adList = adData.split(", ")
 

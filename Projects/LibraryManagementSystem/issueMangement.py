@@ -1,20 +1,25 @@
 import datetime
+from tabulate import tabulate
 from issuebook import IssueBook
+from validation_path import path
+
 
 class IssueMangement:
     
+    headers = ["Member_Id", "Book_Id", "Issue_Date", "Return_Date"]
+
     def issue_book(self):
         mid = input("Enter the Member Id:-")
         bid = input("Enter the Book Id:-")
 
         try:
-            with open("Projects/LibraryManagementSystem/data/bookDetails.txt", "r") as fp:
+            with open(path + "bookDetails.txt", "r") as fp:
                 bData = fp.read()
                 bList = bData.split("\n")
-            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+            with open(path + "member.txt", "r") as fp:
                 mData = fp.read()
                 mList = mData.split("\n")
-            with open("Projects/LibraryManagementSystem/data/issueBook.txt", "r") as fp:
+            with open(path + "issueBook.txt", "r") as fp:
                 iData = fp.read()
                 isulist = iData.split("\n")
 
@@ -44,7 +49,7 @@ class IssueMangement:
                             return
                     else:
                         ib = IssueBook(member_id, book_id, issue_date, return_date)
-                        with open("Projects/LibraryManagementSystem/data/issueBook.txt", "a") as fp:
+                        with open(path + "issueBook.txt", "a") as fp:
                             fp.write(str(ib)+"\n")
 
                         boollist[4] = int(boollist[4]) + 1
@@ -53,7 +58,7 @@ class IssueMangement:
                             boollist[5] = "not available"
                         updatebook = f'{boollist[0]}, {boollist[1]}, {boollist[2]}, {boollist[3]}, {boollist[4]}, {boollist[5]}'
                         data = bData.replace(book, updatebook)
-                        with open("Projects/LibraryManagementSystem/data/bookDetails.txt", "w") as fp:
+                        with open(path + "bookDetails.txt", "w") as fp:
                             fp.write(data)
                             print(f"✅ Book '{book_id}' issued successfully to member '{member_id}' on {issue_date}.")
                             break
@@ -66,13 +71,13 @@ class IssueMangement:
         bid = input("Enter the Book Id:- ")
 
         try:
-            with open("Projects/LibraryManagementSystem/data/bookDetails.txt", "r") as fp:
+            with open(path + "bookDetails.txt", "r") as fp:
                 bData = fp.read()
                 bList = bData.split("\n")
-            with open("Projects/LibraryManagementSystem/data/member.txt", "r") as fp:
+            with open(path + "member.txt", "r") as fp:
                 mData = fp.read()
                 mList = mData.split("\n")
-            with open("Projects/LibraryManagementSystem/data/issueBook.txt", "r") as fp:
+            with open(path + "issueBook.txt", "r") as fp:
                 iData = fp.read()
                 isulist = iData.split("\n")
                 
@@ -94,30 +99,46 @@ class IssueMangement:
                                 memberList[4] = int(memberList[4]) + fine
                                 updateM = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}'
                                 data = mData.replace(member, updateM)
-                                with open("Projects/LibraryManagementSystem/data/member.txt", "w") as fp:
+                                with open(path + "member.txt", "w") as fp:
                                     fp.write(data)
                                     break
 
                     for book in bList:
                         booklist = book.split(", ")
-                        # import pdb;pdb.set_trace()
                         if booklist[0] == bid:
                             booklist[4] = int(booklist[4]) - 1
                             booklist[5] = "available"
                             updateb = f'{booklist[0]}, {booklist[1]}, {booklist[2]}, {booklist[3]}, {booklist[4]}, {booklist[5]}'
                             data = bData.replace(book, updateb)
-                            with open("Projects/LibraryManagementSystem/data/bookDetails.txt", "w") as fp:
+                            with open(path + "bookDetails.txt", "w") as fp:
                                 fp.write(data)
                                 break
 
-                    for issue in isulist:
-                        issueList = issue.split(", ")
-                        if mid == issueList[0] and bid == issueList[1]:
-                            data = iData.replace(issue, "")
-                            with open("Projects/LibraryManagementSystem/data/issueBook.txt", "w") as fp:
-                                fp.write(data)
-                            print(f"✅ Book returned successfully. Fine charged: ₹{fine}")
-                            break
+                    # for issue in isulist:
+                    #     issueList = issue.split(", ")
+                    #     if mid == issueList[0] and bid == issueList[1]:
+                    data = iData.replace(issue, "")
+                    with open(path + "issueBook.txt", "w") as fp:
+                        fp.write(data)
+                    print(f"✅ Book returned successfully. Fine charged: ₹{fine}")
                     break
             else:
                 print("❌ Book not issued ")
+
+    def show_issued_book(self):
+        table_data = []
+        try:
+            with open(path + "issueBook.txt", "r") as fp:
+                allData = fp.read()
+
+        except FileNotFoundError as e:
+            print("error:",e)
+
+        else:
+            mdata = allData.split("\n")
+            for value in mdata:
+                if value != "":
+                    row = value.split(', ')
+                    table_data.append(row)
+
+            print(tabulate(table_data, headers=IssueMangement.headers, tablefmt="pretty"))
