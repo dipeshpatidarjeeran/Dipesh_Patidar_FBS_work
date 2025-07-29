@@ -1,19 +1,26 @@
 from tabulate import tabulate
 from member import Member
-from validation_path import path, valid_member_id
+from validation_path import path, valid_member_id, get_valid_phone, valid_name
 
 
 class MemberManagement:
-    headers = ["ID", "Name", "Branch", "Phone", "Fine"]
+    headers = ["ID", "Name", "Branch", "Age", "Address", "Phone", "Fine", "Status"]
 
     def addMember(self):
         Id = input("Enter the Member ID:-")
         new_id = valid_member_id(Id)
         name = input("Enter the Member Name:-")
+        name = valid_name(name)
         branch = input("Enter the Branch:-")
-        phone = int(input("Enter the Phone Number:-"))
+        age = int(input("Enter the Age:-"))
+        address = input("Enter the Address:-")
+        new_phone = input("Enter the Phone Number:-")
+        phone = get_valid_phone(new_phone)
         fine = 0
-        m1 = Member(new_id, name, branch, phone, fine)
+        status_input = input("Have you paid  100 rupees the membership fee? (yes/no): ")
+        mstatus = "active" if status_input.lower() in ['y','yes'] else "pending"
+
+        m1 = Member(new_id, name, branch, age, address, phone, fine, mstatus)
 
         with open(path + "member.txt", 'a') as fp:
             fp.write(str(m1)+"\n")
@@ -37,7 +44,7 @@ class MemberManagement:
                 if Id in member:
                     row = member.split(", ")
                     table_data.append(row)
-                    print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="pretty"))
+                    print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="fancy_grid"))
                     break
             else:
                 print("Member not found.")
@@ -57,23 +64,31 @@ class MemberManagement:
                 if Id in member:
                     memberList = member.split(", ")
 
-                    ch = input("Do you want to update title(y/n):-")
+                    ch = input("Do you want to update Name(y/n):-")
                     if ch.lower() in ['y','yes']:
-                        memberList[1] = input("Enter the new Title:-")
+                        memberList[1] = input("Enter the new Name:-")
                     
-                    ch = input("Do you want to update author(y/n):-")
+                    ch = input("Do you want to update Branch(y/n):-")
                     if ch.lower() in ['y','yes']:
-                        memberList[2] = input("Enter the new author:-")
+                        memberList[2] = input("Enter the new Branch:-")
                     
-                    ch = input("Do you want to update copies(y/n):-")
+                    ch = input("Do you want to update Age(y/n):-")
                     if ch.lower() in ['y','yes']:
-                        memberList[3] = input("Enter the new copies:-")
+                        memberList[3] = input("Enter the new Age:-")
                     
-                    ch = input("Do you want to update status(y/n):-")
+                    ch = input("Do you want to update Address(y/n):-")
                     if ch.lower() in ['y','yes']:
-                        memberList[4] = input("Enter the new status:-")
+                        memberList[4] = input("Enter the new Address:-")
 
-                    updateMember = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}'
+                    ch = input("Do you want to update Phone Number(y/n):-")
+                    if ch.lower() in ['y','yes']:
+                        memberList[5] = input("Enter the new Phone Number:-")
+
+                    ch = input("Do you want to update Membership Status(y/n):-")
+                    if ch.lower() in ['y','yes']:
+                        memberList[7] = input("Enter the new Status:-")
+
+                    updateMember = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}, {memberList[5]}, {memberList[6]}, {memberList[7]}'
                     data = mData.replace(member, updateMember)
 
                     with open(path + "member.txt", "w") as fp:
@@ -128,4 +143,4 @@ class MemberManagement:
                     row = value.split(', ')
                     table_data.append(row)
 
-            print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="pretty"))
+            print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="fancy_grid"))

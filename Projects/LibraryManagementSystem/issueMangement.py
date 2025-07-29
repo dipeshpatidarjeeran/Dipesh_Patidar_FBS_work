@@ -36,7 +36,7 @@ class IssueMangement:
             
             for book in bList:
                 boollist = book.split(", ")
-                if bid == boollist[0] and boollist[5] == "available":
+                if bid == boollist[0] and boollist[6] == "available":
                     member_id = mid
                     book_id = bid
                     issue_date = str(datetime.date.today())
@@ -52,11 +52,11 @@ class IssueMangement:
                         with open(path + "issueBook.txt", "a") as fp:
                             fp.write(str(ib)+"\n")
 
-                        boollist[4] = int(boollist[4]) + 1
+                        boollist[5] = int(boollist[5]) + 1
                         
-                        if boollist[4] == int(boollist[3]):
-                            boollist[5] = "not available"
-                        updatebook = f'{boollist[0]}, {boollist[1]}, {boollist[2]}, {boollist[3]}, {boollist[4]}, {boollist[5]}'
+                        if boollist[5] == int(boollist[4]):
+                            boollist[6] = "not available"
+                        updatebook = f'{boollist[0]}, {boollist[1]}, {boollist[2]}, {boollist[3]}, {boollist[4]}, {boollist[5]}, {boollist[6]}'
                         data = bData.replace(book, updatebook)
                         with open(path + "bookDetails.txt", "w") as fp:
                             fp.write(data)
@@ -96,8 +96,8 @@ class IssueMangement:
                         for member in mList:
                             if mid in member.split(", ")[0]:
                                 memberList = member.split(", ")
-                                memberList[4] = int(memberList[4]) + fine
-                                updateM = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}'
+                                memberList[6] = int(memberList[6]) + fine
+                                updateM = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}, {memberList[5]}, {memberList[6]}, {memberList[7]}'
                                 data = mData.replace(member, updateM)
                                 with open(path + "member.txt", "w") as fp:
                                     fp.write(data)
@@ -106,9 +106,9 @@ class IssueMangement:
                     for book in bList:
                         booklist = book.split(", ")
                         if booklist[0] == bid:
-                            booklist[4] = int(booklist[4]) - 1
-                            booklist[5] = "available"
-                            updateb = f'{booklist[0]}, {booklist[1]}, {booklist[2]}, {booklist[3]}, {booklist[4]}, {booklist[5]}'
+                            booklist[5] = int(booklist[5]) - 1
+                            booklist[6] = "available"
+                            updateb = f'{booklist[0]}, {booklist[1]}, {booklist[2]}, {booklist[3]}, {booklist[4]}, {booklist[5]}, {booklist[6]}'
                             data = bData.replace(book, updateb)
                             with open(path + "bookDetails.txt", "w") as fp:
                                 fp.write(data)
@@ -141,4 +141,4 @@ class IssueMangement:
                     row = value.split(', ')
                     table_data.append(row)
 
-            print(tabulate(table_data, headers=IssueMangement.headers, tablefmt="pretty"))
+            print(tabulate(table_data, headers=IssueMangement.headers, tablefmt="fancy_grid"))

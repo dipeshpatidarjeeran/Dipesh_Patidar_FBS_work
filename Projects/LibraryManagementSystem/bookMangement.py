@@ -4,17 +4,18 @@ from validation_path import path, valid_id
 
 
 class BookManagement:
-    headers = ["ID", "title", "author", "copies", "bcount", "status"]
+    headers = ["ID", "Title", "Author", "Published Year", "Copies", "bcount", "Status"]
 
     def addBook(self):
         Id = input("Enter the Book ID:-")
         new_id = valid_id(Id)
         title = input("Enter the Book title:-")
         author = input("Enter the author:-")
+        published_year = int(input("Enter the published year:-"))
         copies = int(input("Enter the Book copies:-"))
         status = "available"
         bcount = 0
-        b1 = Book(new_id, title, author, copies, bcount, status)
+        b1 = Book(new_id, title, author, published_year, copies, bcount, status)
 
         with open(path + "bookDetails.txt", 'a') as fp:
             fp.write(str(b1)+"\n")
@@ -38,7 +39,7 @@ class BookManagement:
                 if Id in book:
                     row = book.split(", ")
                     table_data.append(row)
-                    print(tabulate(table_data, headers=BookManagement.headers, tablefmt="pretty"))
+                    print(tabulate(table_data, headers=BookManagement.headers, tablefmt="fancy_grid"))
                     break
             else:
                 print("Book not found.")
@@ -65,16 +66,20 @@ class BookManagement:
                     ch = input("Do you want to update author(y/n):-")
                     if ch.lower() in ['y','yes']:
                         boollist[2] = input("Enter the new author:-")
+                        
+                    ch = input("Do you want to update Published Year(y/n):-")
+                    if ch.lower() in ['y','yes']:
+                        boollist[3] = input("Enter the new Published Year:-")
                     
                     ch = input("Do you want to update copies(y/n):-")
                     if ch.lower() in ['y','yes']:
-                        boollist[3] = input("Enter the new copies:-")
+                        boollist[4] = input("Enter the new copies:-")
                     
                     ch = input("Do you want to update status(y/n):-")
                     if ch.lower() in ['y','yes']:
-                        boollist[4] = input("Enter the new status:-")
+                        boollist[6] = input("Enter the new status:-")
 
-                    updatebook = f'{boollist[0]}, {boollist[1]}, {boollist[2]}, {boollist[3]}, {boollist[4]}'
+                    updatebook = f'{boollist[0]}, {boollist[1]}, {boollist[2]}, {boollist[3]}, {boollist[4]}, {boollist[5]}, {boollist[6]}'
                     data = bData.replace(book, updatebook)
 
                     with open(path + "bookDetails.txt", "w") as fp:
@@ -129,4 +134,4 @@ class BookManagement:
                     row = value.split(', ')
                     table_data.append(row)
 
-            print(tabulate(table_data, headers=BookManagement.headers, tablefmt="pretty"))
+            print(tabulate(table_data, headers=BookManagement.headers, tablefmt="fancy_grid"))
