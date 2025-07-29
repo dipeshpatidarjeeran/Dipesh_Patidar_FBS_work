@@ -1,2 +1,0 @@
-b001, mylife, authore1, 3, 0, available
-b003, hindu, dipehs, 2, 0, available
