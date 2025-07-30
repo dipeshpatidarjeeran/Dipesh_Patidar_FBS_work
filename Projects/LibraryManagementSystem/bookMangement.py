@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from colorama import Fore, Style
 from book import Book
 from validation_path import path, valid_id
 
@@ -19,8 +20,7 @@ class BookManagement:
 
         with open(path + "bookDetails.txt", 'a') as fp:
             fp.write(str(b1)+"\n")
-            print("Successfully Add Book...")
-
+            print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully added the book!" + Style.RESET_ALL)
 
     def GetBook(self):
         table_data =[]
@@ -42,7 +42,7 @@ class BookManagement:
                     print(tabulate(table_data, headers=BookManagement.headers, tablefmt="fancy_grid"))
                     break
             else:
-                print("Book not found.")
+                print(Style.BRIGHT + Fore.RED + "⚠️  Book not found." + Style.RESET_ALL)
 
 
     def updateBook(self):
@@ -84,10 +84,11 @@ class BookManagement:
 
                     with open(path + "bookDetails.txt", "w") as fp:
                         fp.write(data)
-                        print("Successfully Update Book")
+                        print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully Updated the Book!" + Style.RESET_ALL)
                         break
             else:
-                print("Book not found.")
+                print(Style.BRIGHT + Fore.RED + "⚠️  Book not found" + Style.RESET_ALL)
+
 
 
     def deleteBook(self):
@@ -113,9 +114,10 @@ class BookManagement:
             if len(new_bData) != len(bData):
                 with open(path + "bookDetails.txt", "w") as fp:
                     fp.write("\n".join(new_bData))
-                print("Successfully Delete Book Details")
+                print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully Deleted Book Details!" + Style.RESET_ALL)
+
             else:
-                print("Book not found.")
+                print(Style.BRIGHT + Fore.RED + "⚠️  Book not found." + Style.RESET_ALL)
 
 
     def showAllBook(self):

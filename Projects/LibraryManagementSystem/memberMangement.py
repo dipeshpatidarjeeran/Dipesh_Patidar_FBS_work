@@ -1,5 +1,8 @@
+import datetime
 from tabulate import tabulate
+from colorama import Fore, Style
 from member import Member
+from transactions import Transaction
 from validation_path import path, valid_member_id, get_valid_phone, valid_name
 
 
@@ -19,12 +22,22 @@ class MemberManagement:
         fine = 0
         status_input = input("Have you paid  100 rupees the membership fee? (yes/no): ")
         mstatus = "active" if status_input.lower() in ['y','yes'] else "pending"
-
+        if mstatus == "pending":
+            fine = 100
         m1 = Member(new_id, name, branch, age, address, phone, fine, mstatus)
 
         with open(path + "member.txt", 'a') as fp:
             fp.write(str(m1)+"\n")
-            print("Successfully Add Member...")
+            print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully added Member Details!" + Style.RESET_ALL)
+
+        if mstatus == "active":
+            amount = 100
+            ptype = "membership fee"
+            date = str(datetime.date.today())
+            t1 = Transaction(amount, new_id, date, ptype)
+
+            with open(path + "transactions.txt", "a") as fp:
+                fp.write(str(t1)+"\n")
 
 
     def GetMember(self):
@@ -47,7 +60,8 @@ class MemberManagement:
                     print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="fancy_grid"))
                     break
             else:
-                print("Member not found.")
+                print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
+
 
 
     def updateMember(self):
@@ -93,10 +107,10 @@ class MemberManagement:
 
                     with open(path + "member.txt", "w") as fp:
                         fp.write(data)
-                        print("Successfully Update Member")
+                        print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Updated Member Details!" + Style.RESET_ALL)
                         break
             else:
-                print("Member not found.")
+                print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
 
 
     def deleteMember(self):
@@ -122,9 +136,9 @@ class MemberManagement:
             if len(new_mData) != len(mData):
                 with open(path + "member.txt", "w") as fp:
                     fp.write("\n".join(new_mData))
-                print("Successfully Delete Member Details")
+                print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Deleted Member Details!" + Style.RESET_ALL)
             else:
-                print("Member not found.")
+                print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
 
 
     def showAllMember(self):

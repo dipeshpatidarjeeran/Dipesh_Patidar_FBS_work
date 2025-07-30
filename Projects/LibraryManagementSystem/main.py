@@ -9,9 +9,10 @@ print(Fore.CYAN + Style.BRIGHT + banner + Style.RESET_ALL)
 print("📚📖📘 Welcome to Library Management System 📘📖📚")
 
 while(ch != '2'):
-    print("""Please select choice:
-          1. login
-          2. exit""")
+    print(Fore.YELLOW + Style.BRIGHT + """📋 Please select choice:
+            1. 🔐 login
+            2. 🚪exit
+        """ + Style.RESET_ALL)
     ch = input("Enter the choice:")
 
     if(ch == '1'):
@@ -27,13 +28,13 @@ while(ch != '2'):
 
         else:
             if eid == adList[0] and passw == adList[1]:
-                print("logged in  successful...")
+                print(Fore.GREEN + Style.BRIGHT + "✅ Logout successful..." + Style.RESET_ALL)
                 Librarian()
                 
             else:
-                print("Invalid credentials...")
+                print(Fore.RED + Style.BRIGHT + "⚠️  Invalid credentials..." + Style.RESET_ALL)
                 
     elif(ch == '2'):
-        print("Thankyou for Visiting!")
+        print(Fore.GREEN + Style.BRIGHT + "🎉📚 Thank you for visiting! Have a great day! 🎉📚" + Style.RESET_ALL)
     else:
-        print("Invalid choice...Please try again")
+        print(Fore.RED + Style.BRIGHT + "❌ Invalid choice. Please try again." + Style.RESET_ALL)

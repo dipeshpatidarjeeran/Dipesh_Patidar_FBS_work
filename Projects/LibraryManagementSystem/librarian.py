@@ -1,26 +1,33 @@
+from colorama import Fore, Style
 from bookMangement import BookManagement
 from memberMangement import MemberManagement
 from issueMangement import IssueMangement
+from paymentManagement import PaymentMangement
+
 bm = BookManagement()
 m = MemberManagement()
 im = IssueMangement()
+pm = PaymentMangement()
 
 class Librarian:
     def __init__(self):
         ch = 0 
-        while(ch != '11'):
-            print("""Please select choice
-                1. Add Book
-                2. Search Book
-                3. View All Books
-                4. Remove Book
-                5. Register Member
-                6. View All Members
-                7. Issue Book
-                8. Return Book
-                9. View Issued Books
-                10. Remove Member
-                11. logout""")
+        while(ch != '13'):
+            print(Fore.YELLOW + Style.BRIGHT +
+            """📋 Please select choice
+            1. Add Book
+            2. Search Book
+            3. View All Books
+            4. Remove Book
+            5. Register Member
+            6. View All Members
+            7. Issue Book
+            8. Return Book
+            9. View Issued Books
+            10. Remove Member
+            11. Pay Fine
+            12. Show Transactions
+            13. logout""" + Style.RESET_ALL)
             
             ch = input("Enter the choice:-")
 
@@ -55,7 +62,13 @@ class Librarian:
                 m.deleteMember()
 
             elif(ch == '11'):
-                print("logout successful...")
+                pm.pay_fine()
+
+            elif(ch == '12'):
+                pm.show_all_transaction()
+
+            elif(ch == '13'):
+                print(Fore.GREEN + Style.BRIGHT + "🔓 Logout successful." + Style.RESET_ALL)
 
             else:
-                print("Invalid choice...Please try again")
+                print(Fore.RED + Style.BRIGHT + "❌ Invalid choice. Please try again." + Style.RESET_ALL)
