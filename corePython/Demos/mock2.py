@@ -1,50 +1,31 @@
-# data = [4,6,5,3,2]
+# li = [3,5,2,3,5]
+# new_list = []
+# for i in range(len(li)):
+#     if li[i] not in new_list:
+#         new_list.append(li[i])
+# print(new_list)
 
-# mapdata = map(lambda x : x**3, data)
-# li = list(mapdata)
+
+# li = [20,30,10,40,50]
+
+# for i in range(len(li)-1):
+#     ind = i
+#     for j in range(i,len(li)):
+#         if li[i] > li[j]:
+#             ind = j
+#     li[i],li[ind] = li[ind],li[i]
+
 # print(li)
 
-# even = filter(lambda x : x % 2 == 0,data)
-# li = list(even)
-# print(li)
 
-# from functools import reduce
-
-# val = reduce(lambda x, y : x * y , data)
-# print(val)
-
-
-# from abc import ABC, abstractmethod
-
-# class vahicle(ABC):
-#     def __init__(self, name, color):
-#         self.name = name
-#         self.color = color
-
-#     @abstractmethod
-#     def stop(self):
-#         pass
-
-# class Car(vahicle):
-#     def __init__(self, name, color, price):
-#         super().__init__(name, color)
-#         self.price = price
-
-#     def stop(self):
-#         print("car is stop")
-
-# c = Car("BMW", "black", 4500000)
-# c.stop()
-
-def fab():
-    a = -1
-    b = 1
+def even():
+    n = 1
     while True:
-        c = a + b
-        yield c
-        a = b
-        b = c
+        if n %2 ==0:
+            yield n
+        n += 1
 
-f = fab()
-print(next(f))
-
+e = even()
+print(next(e))
+print(next(e))
+print(next(e))
