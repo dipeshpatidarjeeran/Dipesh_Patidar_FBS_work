@@ -32,7 +32,7 @@ def valid_member_id(Id):
 
 
 def get_valid_phone(phone):
-    if phone.isdigit() and len(phone) == 10 and phone[0] not in ['0', '1']:
+    if phone.isdigit() and len(phone) == 10 and phone[0] not in ['0','1','2','3','4','5']:
         return phone
     else:
         print(Fore.RED + Style.BRIGHT + "❌ Invalid phone number. Please enter a valid 10-digit number." + Style.RESET_ALL)
@@ -41,9 +41,17 @@ def get_valid_phone(phone):
 
 
 def valid_name(name):
-    if name.isalpha() and len(name.strip()) >= 2:
+    if all(part.isalpha() for part in name.strip().split()) and len(name.strip()) >= 2:
         return name.title()
     else:
         print(Fore.RED + Style.BRIGHT + "❌ Invalid name. Only alphabets allowed and must be at least 2 characters." + Style.RESET_ALL)
         name = input("Enter your name: ")
         return valid_name(name)
+
+
+def get_input(prompt):
+    value = input(prompt).strip()
+    while not value:  # Jab tak blank hai
+        print(Style.BRIGHT + Fore.RED + "❌ This field cannot be blank. Please enter something." + Style.RESET_ALL)
+        value = input(prompt).strip()
+    return value

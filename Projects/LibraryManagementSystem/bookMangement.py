@@ -1,19 +1,19 @@
 from tabulate import tabulate
 from colorama import Fore, Style
 from book import Book
-from validation_path import path, valid_id
+from validation_path import path, valid_id, get_input
 
 
 class BookManagement:
     headers = ["ID", "Title", "Author", "Published Year", "Copies", "bcount", "Status"]
 
     def addBook(self):
-        Id = input("Enter the Book ID:-")
+        Id = get_input("Enter the Book ID:-")
         new_id = valid_id(Id)
-        title = input("Enter the Book title:-")
-        author = input("Enter the author:-")
-        published_year = int(input("Enter the published year:-"))
-        copies = int(input("Enter the Book copies:-"))
+        title = get_input("Enter the Book title:-")
+        author = get_input("Enter the author:-")
+        published_year = int(get_input("Enter the published year:-"))
+        copies = int(get_input("Enter the Book copies:-"))
         status = "available"
         bcount = 0
         b1 = Book(new_id, title, author, published_year, copies, bcount, status)
@@ -24,7 +24,7 @@ class BookManagement:
 
     def GetBook(self):
         table_data =[]
-        Id = input("Enter the Book Id:-")
+        Id = get_input("Enter the Book Id:-")
 
         try:
             with open(path + "bookDetails.txt", "r") as fp:
@@ -36,7 +36,7 @@ class BookManagement:
 
         else:
             for book in bList:
-                if Id in book:
+                if Id == book.split(", ")[0]:
                     row = book.split(", ")
                     table_data.append(row)
                     print(tabulate(table_data, headers=BookManagement.headers, tablefmt="fancy_grid"))
@@ -46,7 +46,7 @@ class BookManagement:
 
 
     def updateBook(self):
-        Id = input("Enter the Book Id:-")
+        Id = get_input("Enter the Book Id:-")
         try:
             with open(path + "bookDetails.txt", "r") as fp:
                 bData = fp.read()
@@ -92,7 +92,7 @@ class BookManagement:
 
 
     def deleteBook(self):
-        Id = input("Enter the book Id:-")
+        Id = get_input("Enter the book Id:-")
         try:
             with open(path + "bookDetails.txt", "r") as fp:
                 allData = fp.read()
@@ -110,7 +110,7 @@ class BookManagement:
                     print("❌ Book cannot be deleted. It is currently issued to a member")
                     return
 
-            new_bData = [book for book in bData if Id not in book]
+            new_bData = [book for book in bData if Id != book.split(", ")[0]]
             if len(new_bData) != len(bData):
                 with open(path + "bookDetails.txt", "w") as fp:
                     fp.write("\n".join(new_bData))

@@ -3,24 +3,24 @@ from tabulate import tabulate
 from colorama import Fore, Style
 from member import Member
 from transactions import Transaction
-from validation_path import path, valid_member_id, get_valid_phone, valid_name
+from validation_path import path, valid_member_id, get_valid_phone, valid_name, get_input
 
 
 class MemberManagement:
     headers = ["ID", "Name", "Branch", "Age", "Address", "Phone", "Fine", "Status"]
 
     def addMember(self):
-        Id = input("Enter the Member ID:-")
+        Id = get_input("Enter the Member ID:-")
         new_id = valid_member_id(Id)
-        name = input("Enter the Member Name:-")
+        name = get_input("Enter the Member Name:-")
         name = valid_name(name)
-        branch = input("Enter the Branch:-")
-        age = int(input("Enter the Age:-"))
-        address = input("Enter the Address:-")
-        new_phone = input("Enter the Phone Number:-")
+        branch = get_input("Enter the Branch:-")
+        age = int(get_input("Enter the Age:-"))
+        address = get_input("Enter the Address:-")
+        new_phone = get_input("Enter the Phone Number:-")
         phone = get_valid_phone(new_phone)
         fine = 0
-        status_input = input("Have you paid  100 rupees the membership fee? (yes/no): ")
+        status_input = get_input("Have you paid  100 rupees the membership fee? (yes/no): ")
         mstatus = "active" if status_input.lower() in ['y','yes'] else "pending"
         if mstatus == "pending":
             fine = 100
@@ -42,7 +42,7 @@ class MemberManagement:
 
     def GetMember(self):
         table_data =[]
-        Id = input("Enter the Member Id:-")
+        Id = get_input("Enter the Member Id:-")
 
         try:
             with open(path + "member.txt", "r") as fp:
@@ -54,7 +54,7 @@ class MemberManagement:
 
         else:
             for member in mList:
-                if Id in member:
+                if Id == member.split(", ")[0]:
                     row = member.split(", ")
                     table_data.append(row)
                     print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="fancy_grid"))
@@ -65,7 +65,7 @@ class MemberManagement:
 
 
     def updateMember(self):
-        Id = input("Enter the member Id:-")
+        Id = get_input("Enter the member Id:-")
         try:
             with open(path + "member.txt", "r") as fp:
                 mData = fp.read()
@@ -75,7 +75,7 @@ class MemberManagement:
             print("Error:",e)
         else:
             for member in mList:
-                if Id in member:
+                if Id == member.split(", ")[0]:
                     memberList = member.split(", ")
 
                     ch = input("Do you want to update Name(y/n):-")
@@ -114,7 +114,7 @@ class MemberManagement:
 
 
     def deleteMember(self):
-        Id = input("Enter the Member Id:-")
+        Id = get_input("Enter the Member Id:-")
         try:
             with open(path + "member.txt", "r") as fp:
                 allData = fp.read()
@@ -132,7 +132,7 @@ class MemberManagement:
                     print("❌ Member cannot be deleted. Book is still issued")
                     return
             
-            new_mData = [member for member in mData if Id not in member]
+            new_mData = [member for member in mData if Id != member.split(", ")[0]]
             if len(new_mData) != len(mData):
                 with open(path + "member.txt", "w") as fp:
                     fp.write("\n".join(new_mData))

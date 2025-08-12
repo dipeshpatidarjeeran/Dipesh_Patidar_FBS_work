@@ -2,7 +2,7 @@ import datetime
 from tabulate import tabulate
 from colorama import Fore, Style
 from issuebook import IssueBook
-from validation_path import path
+from validation_path import path, get_input
 
 
 class IssueMangement:
@@ -10,8 +10,8 @@ class IssueMangement:
     headers = ["Member_Id", "Book_Id", "Issue_Date", "Return_Date"]
 
     def issue_book(self):
-        mid = input("Enter the Member Id:-")
-        bid = input("Enter the Book Id:-")
+        mid = get_input("Enter the Member Id:-")
+        bid = get_input("Enter the Book Id:-")
 
         try:
             with open(path + "bookDetails.txt", "r") as fp:
@@ -69,8 +69,8 @@ class IssueMangement:
                 
 
     def return_book(self):
-        mid = input("Enter the Member Id:- ")
-        bid = input("Enter the Book Id:- ")
+        mid = get_input("Enter the Member Id:- ")
+        bid = get_input("Enter the Book Id:- ")
 
         try:
             with open(path + "bookDetails.txt", "r") as fp:
@@ -96,7 +96,7 @@ class IssueMangement:
                     fine = days * 10 if days > 0 else 0
                     if fine > 0:
                         for member in mList:
-                            if mid in member.split(", ")[0]:
+                            if mid == member.split(", ")[0]:
                                 memberList = member.split(", ")
                                 memberList[6] = int(memberList[6]) + fine
                                 memberList[7] = "pending"
@@ -120,9 +120,10 @@ class IssueMangement:
                     # for issue in isulist:
                     #     issueList = issue.split(", ")
                     #     if mid == issueList[0] and bid == issueList[1]:
-                    data = iData.replace(issue, "")
+                    # data = iData.replace(issue, "")
+                    new_iData = [issue for issue in iData.strip().split("\n") if mid != issue.split(", ")[0] and bid != issue.split(", ")[1]]
                     with open(path + "issueBook.txt", "w") as fp:
-                        fp.write(data)
+                        fp.write("\n".join(new_iData))
                     print(Style.BRIGHT + Fore.GREEN + f"✅ Book returned successfully. Fine charged: ₹{fine}." + Style.RESET_ALL)
                     break
             else:
