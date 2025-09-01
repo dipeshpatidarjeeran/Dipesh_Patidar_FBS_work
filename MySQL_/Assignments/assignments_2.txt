@@ -1,0 +1,28 @@
+1. Create the table Member, Books and Issue without any constraints as
+    mentioned in the schema description above.
+    => create table member
+        (mid int primary key, name varchar(30),
+        address varchar(50), acc_open_date date,
+        mtype enum ('liftime','annual','half yearly','quarterly'),
+        fees_paid int, book_allowed int,
+        penalty_amount decimal(7,2));
+    => create table books
+        (bno int primary key,bname varchar(30),
+        author varchar(30), cost decimal(7,2),
+        category char(10));
+    => create table issue
+        (issue_id int, book_no int, member_id int,
+        issue_date date, return_date date);
+
+
+2. View the structure of the tables.
+    => desc member;
+    => desc books;
+    => desc issue;
+
+
+3. Drop the Member table
+    => drop table member;
+
+
+4. 

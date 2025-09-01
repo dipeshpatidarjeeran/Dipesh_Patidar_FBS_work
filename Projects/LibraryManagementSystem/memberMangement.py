@@ -1,4 +1,4 @@
-import datetime
+import datetime, textwrap
 from tabulate import tabulate
 from colorama import Fore, Style
 from member import Member
@@ -21,8 +21,8 @@ class MemberManagement:
         phone = get_valid_phone(new_phone)
         fine = 0
         status_input = get_input("Have you paid  100 rupees the membership fee? (yes/no): ")
-        mstatus = "active" if status_input.lower() in ['y','yes'] else "pending"
-        if mstatus == "pending":
+        mstatus = "active" if status_input.lower() in ['y','yes'] else "pending fees"
+        if mstatus == "pending fees":
             fine = 100
         m1 = Member(new_id, name, branch, age, address, phone, fine, mstatus)
 
@@ -135,7 +135,7 @@ class MemberManagement:
             new_mData = [member for member in mData if Id != member.split(", ")[0]]
             if len(new_mData) != len(mData):
                 with open(path + "member.txt", "w") as fp:
-                    fp.write("\n".join(new_mData))
+                    fp.write("\n".join(new_mData) + "\n")
                 print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Deleted Member Details!" + Style.RESET_ALL)
             else:
                 print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
@@ -155,6 +155,7 @@ class MemberManagement:
             for value in mdata:
                 if value != "":
                     row = value.split(', ')
+                    row[4] = textwrap.fill(row[4],width=15)
                     table_data.append(row)
 
             print(tabulate(table_data, headers=MemberManagement.headers, tablefmt="fancy_grid"))

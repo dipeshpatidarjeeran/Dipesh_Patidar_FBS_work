@@ -91,15 +91,16 @@ class IssueMangement:
                 
                 if iList[0] == mid and iList[1] == bid:
                     return_date = datetime.datetime.strptime(iList[3], '%Y-%m-%d').date()
-                    issue_date = datetime.datetime.strptime(iList[2], '%Y-%m-%d').date()
-                    days = (return_date - issue_date).days
+                    today_date = datetime.date.today()
+                    days = (today_date - return_date).days
                     fine = days * 10 if days > 0 else 0
+                    
                     if fine > 0:
                         for member in mList:
                             if mid == member.split(", ")[0]:
                                 memberList = member.split(", ")
                                 memberList[6] = int(memberList[6]) + fine
-                                memberList[7] = "pending"
+                                memberList[7] = "pending fine"
                                 updateM = f'{memberList[0]}, {memberList[1]}, {memberList[2]}, {memberList[3]}, {memberList[4]}, {memberList[5]}, {memberList[6]}, {memberList[7]}'
                                 data = mData.replace(member, updateM)
                                 with open(path + "member.txt", "w") as fp:
@@ -123,11 +124,13 @@ class IssueMangement:
                     # data = iData.replace(issue, "")
                     new_iData = [issue for issue in iData.strip().split("\n") if mid != issue.split(", ")[0] and bid != issue.split(", ")[1]]
                     with open(path + "issueBook.txt", "w") as fp:
-                        fp.write("\n".join(new_iData))
+                        fp.write("\n".join(new_iData) + "\n")
                     print(Style.BRIGHT + Fore.GREEN + f"✅ Book returned successfully. Fine charged: ₹{fine}." + Style.RESET_ALL)
                     break
+
             else:
-                print(Style.BRIGHT + Fore.RED + "❌ Book not issued " + Style.RESET_ALL)
+                
+                print(Style.BRIGHT + Fore.RED + "❌ Invalid Book Id or Member Id " + Style.RESET_ALL)
 
     def show_issued_book(self):
         table_data = []

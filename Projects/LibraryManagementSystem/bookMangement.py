@@ -113,7 +113,7 @@ class BookManagement:
             new_bData = [book for book in bData if Id != book.split(", ")[0]]
             if len(new_bData) != len(bData):
                 with open(path + "bookDetails.txt", "w") as fp:
-                    fp.write("\n".join(new_bData))
+                    fp.write("\n".join(new_bData) + "\n")
                 print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully Deleted Book Details!" + Style.RESET_ALL)
 
             else:

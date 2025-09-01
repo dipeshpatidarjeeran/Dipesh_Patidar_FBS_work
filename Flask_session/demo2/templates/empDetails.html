@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome to Flask!!</h1>
+    <h1>{{data}}</h1>
+    <hr/>
+    <center>
+        <table style="width: 500px;height: 200px;" border="5">
+            <tr><th>Eid</th><th>Employee Name</th><th>Salary</th></tr>
+            {%for Emp in data %}
+            <tr>
+                {%for E in Emp %}
+                    <th>{{E}}</th>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </table>
+    </center>
+    
+</body>
+</html>
