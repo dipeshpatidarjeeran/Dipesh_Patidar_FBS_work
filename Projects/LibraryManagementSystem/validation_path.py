@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+from logs import Logs
 path = "C:/Users/HP/Desktop/FBS/Projects/LibraryManagementSystem/data/"
 
 
@@ -55,3 +56,8 @@ def get_input(prompt):
         print(Style.BRIGHT + Fore.RED + "❌ This field cannot be blank. Please enter something." + Style.RESET_ALL)
         value = input(prompt).strip()
     return value
+
+def create_logs(ltype,details):
+    t1 = Logs(ltype, details)
+    with open(path + "logs.txt", 'a') as fp:
+        fp.write(str(t1)+"\n")

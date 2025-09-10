@@ -26,7 +26,7 @@ class Librarian:
             9. View Issued Books
             10. Remove Member
             11. Pay Fine
-            12. Show Transactions
+            12. Show All Logs
             13. logout""" + Style.RESET_ALL)
             
             ch = input("Enter the choice:-")
@@ -65,7 +65,7 @@ class Librarian:
                 pm.pay_fine()
 
             elif(ch == '12'):
-                pm.show_all_transaction()
+                pm.show_all_logs()
 
             elif(ch == '13'):
                 print(Fore.GREEN + Style.BRIGHT + "🔓 Logout successful." + Style.RESET_ALL)

@@ -1,7 +1,7 @@
 from tabulate import tabulate
 from colorama import Fore, Style
 from book import Book
-from validation_path import path, valid_id, get_input
+from validation_path import path, valid_id, get_input, create_logs
 
 
 class BookManagement:
@@ -21,6 +21,7 @@ class BookManagement:
         with open(path + "bookDetails.txt", 'a') as fp:
             fp.write(str(b1)+"\n")
             print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully added the book!" + Style.RESET_ALL)
+        create_logs("Book Added", f"Book Id {Id} added")
 
     def GetBook(self):
         table_data =[]
@@ -85,6 +86,7 @@ class BookManagement:
                     with open(path + "bookDetails.txt", "w") as fp:
                         fp.write(data)
                         print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully Updated the Book!" + Style.RESET_ALL)
+                        create_logs("Book Updated", f"Book Id {Id} Updated")
                         break
             else:
                 print(Style.BRIGHT + Fore.RED + "⚠️  Book not found" + Style.RESET_ALL)
@@ -106,6 +108,8 @@ class BookManagement:
             print("error:",e)
         else:
             for issue in iData:
+                if not issue:
+                    continue 
                 if Id == issue.split(", ")[1]:
                     print("❌ Book cannot be deleted. It is currently issued to a member")
                     return
@@ -115,6 +119,7 @@ class BookManagement:
                 with open(path + "bookDetails.txt", "w") as fp:
                     fp.write("\n".join(new_bData) + "\n")
                 print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "📘 Successfully Deleted Book Details!" + Style.RESET_ALL)
+                create_logs("Book Deleted", f"Book Id {Id} Deleted")
 
             else:
                 print(Style.BRIGHT + Fore.RED + "⚠️  Book not found." + Style.RESET_ALL)

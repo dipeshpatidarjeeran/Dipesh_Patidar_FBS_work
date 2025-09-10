@@ -1,0 +1,204 @@
+CREATE TABLE Patient (
+    p_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    age int,
+    dob DATE,
+    gender ENUM('M', 'F', 'O') NOT NULL,
+    b_group varchar(10),
+    phone bigint,
+    email VARCHAR(100),
+    address VARCHAR(255)
+);
+
+CREATE TABLE doctor (
+    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    age int,
+    gender ENUM('M', 'F', 'O') NOT NULL,
+    Specialization varchar(50),
+    Experience int,
+    phone bigint,
+    email VARCHAR(100),
+    address VARCHAR(255),
+    ward_no varchar(20),
+    status varchar(10),
+    dept_id int,
+    foreign key (dept_id) references dept (dept_id) on delete set null
+);
+
+CREATE TABLE dept (
+    dept_id INT AUTO_INCREMENT PRIMARY KEY,
+    dname VARCHAR(50) NOT NULL,
+    loc varchar(50)
+);
+
+CREATE TABLE Disease (
+    disease_id INT AUTO_INCREMENT PRIMARY KEY,
+    dis_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Allergy (
+    allergy_id INT AUTO_INCREMENT PRIMARY KEY,
+    allergy_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Treatment (
+    t_id INT AUTO_INCREMENT PRIMARY KEY,
+    tname VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Medication (
+    Medication_id INT AUTO_INCREMENT PRIMARY KEY,
+    medicine_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Patient_Allergy (
+    pa_id INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_id INT,
+    Allergy_id INT,
+    Severity ENUM('Mild', 'Moderate', 'Severe') NOT NULL,
+    Notes VARCHAR(255),
+    FOREIGN KEY (Patient_id) REFERENCES Patient(p_id) on delete set null,
+    FOREIGN KEY (Allergy_id) REFERENCES Allergy(Allergy_id) on delete set null
+);
+
+CREATE TABLE Patient_Medication (
+    pm_id INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_id INT,
+    Medication_id INT,
+    Start_Date DATE,
+    End_Date DATE,
+    Dosage VARCHAR(100),
+    Notes VARCHAR(255),
+    FOREIGN KEY (Patient_id) REFERENCES Patient(p_id) on delete set null,
+    FOREIGN KEY (Medication_id) REFERENCES Medication(Medication_id) on delete set null
+);
+
+CREATE TABLE Patient_Treatment (
+    pt_id INT PRIMARY KEY AUTO_INCREMENT,
+    Encounter_id INT,
+    Treatment_id INT,
+    Start_Date DATE,
+    End_Date DATE,
+    Status ENUM('Ongoing', 'Completed'),
+    Notes VARCHAR(255),
+    FOREIGN KEY (Encounter_ID) REFERENCES Encounter(e_id) ON DELETE set null,
+    FOREIGN KEY (Treatment_id) REFERENCES Treatment(t_id) on delete set null
+);
+
+CREATE TABLE Encounter (
+    e_id INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_id INT,
+    doctor_id INT,
+    encounter_Date DATE,
+    encounter_type varchar(50),
+    reason varchar(100),
+    status VARCHAR(50),
+    FOREIGN KEY (Patient_id) REFERENCES Patient(p_id) on delete set null,
+    FOREIGN KEY (doctor_id) REFERENCES doctor(doctor_id) on delete set null
+);
+
+CREATE TABLE Insurance (
+    Insurance_id INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_id INT,
+    Provider_Name VARCHAR(100),
+    Policy_Number VARCHAR(50),
+    Coverage_Details VARCHAR(255),
+    Valid_Till DATE,
+    claim_status varchar(20),
+    approved_amt int,
+    FOREIGN KEY (Patient_id) REFERENCES Patient(p_id) ON DELETE SET NULL
+);
+
+CREATE TABLE Diagnosis (
+    Diagnosis_id INT PRIMARY KEY AUTO_INCREMENT,
+    Encounter_id INT,
+    Diagnosis_Date DATE,
+    Severity ENUM('Mild', 'Moderate', 'Severe', 'Critical'),
+    Notes VARCHAR(255),
+    FOREIGN KEY (Encounter_ID) REFERENCES Encounter(e_id) ON DELETE set null
+);
+
+CREATE TABLE Diagnosis_Disease (
+    Diagnosis_Dise_id INT PRIMARY KEY AUTO_INCREMENT,
+    Diagnosis_id INT,
+    Disease_id INT,
+    Severity ENUM('Mild', 'Moderate', 'Severe', 'Critical'),
+    Description VARCHAR(100),
+    FOREIGN KEY (Diagnosis_id) REFERENCES Diagnosis(Diagnosis_id) ON DELETE set null,
+    FOREIGN KEY (Disease_id) REFERENCES Disease(disease_id) ON DELETE set null
+);
+
+CREATE TABLE Prescription (
+    Prescription_id INT PRIMARY KEY AUTO_INCREMENT,
+    Encounter_id INT,
+    Prescription_Date DATE,
+    Notes VARCHAR(255),
+    FOREIGN KEY (Encounter_ID) REFERENCES Encounter(e_id) ON DELETE set null
+);
+
+
+CREATE TABLE Prescription_Medication (
+    Prescription_M_id INT PRIMARY KEY AUTO_INCREMENT,
+    Prescription_id int,
+    Medication_id INT,
+    Dosage VARCHAR(50),
+    Frequency VARCHAR(50),
+    Duration VARCHAR(50),
+    FOREIGN KEY (Prescription_id) REFERENCES Prescription(Prescription_id) ON DELETE set null,
+    FOREIGN KEY (Medication_id) REFERENCES Medication(Medication_id) ON DELETE set null
+);
+
+CREATE TABLE Dispensing (
+    Dispensing_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Prescription_M_id INT,
+    Dispensed_Date DATE,
+    Quantity INT,
+    Pharmacist_Name VARCHAR(100),
+    FOREIGN KEY (Prescription_M_id) REFERENCES Prescription_Medication(Prescription_M_id) ON DELETE set null
+);
+
+CREATE TABLE Test_Type (
+    Test_id INT PRIMARY KEY AUTO_INCREMENT,
+    Tname VARCHAR(50),
+    Description VARCHAR(255)
+);
+
+CREATE TABLE Diagnostic_Test (
+    DiagnosticTest_id INT PRIMARY KEY AUTO_INCREMENT,
+    Encounter_id int,
+    Test_id INt,
+    Test_Date DATE,
+    Result ENUM('Positive', 'Negative', 'Normal', 'Abnormal'),
+    FOREIGN KEY (Encounter_id) REFERENCES Encounter(e_id) ON DELETE set null,
+    FOREIGN KEY (Test_id) REFERENCES Test_Type(Test_id) ON DELETE set null
+);
+
+CREATE TABLE Procedure_tab (
+    Procedure_id INT PRIMARY KEY AUTO_INCREMENT,
+    Procedure_Name VARCHAR(100),
+    Cost DECIMAL(10,2),
+    Description VARCHAR(255)
+);
+
+CREATE TABLE Patient_Procedure (
+    Patient_Pro_id INT PRIMARY KEY AUTO_INCREMENT,
+    Procedure_id INT,
+    Encounter_id INT,
+    Procedure_Date DATE,
+    Result VARCHAR(50),
+    Notes TEXT,
+    FOREIGN KEY (Procedure_id) REFERENCES Procedure_tab(Procedure_id) ON DELETE set null,
+    FOREIGN KEY (Encounter_id) REFERENCES Encounter(e_id) ON DELETE set null
+);
+
+CREATE TABLE Admission (
+    Admission_id INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_id INT,
+    Admission_Date DATE,
+    Reason VARCHAR(255),
+    Discharge_Date DATE,
+    Ward_No VARCHAR(20),
+    Status ENUM('Admitted', 'Discharged', 'Transferred') DEFAULT 'Admitted',
+    FOREIGN KEY (Patient_id) REFERENCES Patient(p_id) ON DELETE SET NULL
+);

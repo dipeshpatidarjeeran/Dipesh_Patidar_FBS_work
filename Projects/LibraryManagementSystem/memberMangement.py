@@ -2,8 +2,8 @@ import datetime, textwrap
 from tabulate import tabulate
 from colorama import Fore, Style
 from member import Member
-from transactions import Transaction
-from validation_path import path, valid_member_id, get_valid_phone, valid_name, get_input
+from logs import Logs
+from validation_path import path, valid_member_id, get_valid_phone, valid_name, get_input, create_logs
 
 
 class MemberManagement:
@@ -29,16 +29,13 @@ class MemberManagement:
         with open(path + "member.txt", 'a') as fp:
             fp.write(str(m1)+"\n")
             print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully added Member Details!" + Style.RESET_ALL)
+            create_logs("Member Added", f"Member Id {Id} added")
 
         if mstatus == "active":
-            amount = 100
             ptype = "membership fee"
-            date = str(datetime.date.today())
-            t1 = Transaction(amount, new_id, date, ptype)
-
-            with open(path + "transactions.txt", "a") as fp:
-                fp.write(str(t1)+"\n")
-
+            create_logs(ptype, f"100 rupees Membership fee paid by member {Id}")
+        else:
+            create_logs(mstatus, f"100 rupees Membership fee remains by member {Id}")
 
     def GetMember(self):
         table_data =[]
@@ -108,6 +105,7 @@ class MemberManagement:
                     with open(path + "member.txt", "w") as fp:
                         fp.write(data)
                         print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Updated Member Details!" + Style.RESET_ALL)
+                        create_logs("Member Updated", f"Member Id {Id} Updated")
                         break
             else:
                 print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
@@ -137,6 +135,7 @@ class MemberManagement:
                 with open(path + "member.txt", "w") as fp:
                     fp.write("\n".join(new_mData) + "\n")
                 print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Deleted Member Details!" + Style.RESET_ALL)
+                create_logs("Member Deleted", f"Member Id {Id} Deleted")
             else:
                 print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
 

@@ -1,0 +1,61 @@
+1. Write a SQL statement to insert a record as follows:
+    Employees:
+    =>  create table employee
+        (eid int primary key, fname varchar(20),lname varchar(20),
+        email varchar(50) unique, phone bigint, hire_date date not null,
+        job_id varchar(20) not null, salary decimal(10,2),
+        commission_pct decimal(5,2), manager_id int, dept_id int);
+
+    => create table department
+    (dept_id int primary key, d_name varchar(30),
+    manager_id int, loc_id int);
+
+
+2. Write a SQL statement to insert 3 rows by a single insert statement.
+    => insert into employee
+    values (101, 'Neena', 'Kochhar', 'NKOCHHAR', '515.123.4568', '1987-06-18', 'AD_VP', 17000.00, 0.00, 200, 10),
+    (102, 'Lex', 'De Haan', 'LDEHAAN', '515.123.4569', '1987-06-19', 'AD_VP', 17000.00, 0.00, 200, 10),
+    (103, 'Alexander', 'Hunold', 'AHUNOLD', '590.423.4567', '1987-06-20', 'IT_PROG', 9000.00, 0.00, 103, 60);
+
+
+3. Write a SQL statement to insert one row in jobs table to ensure that no duplicate
+    value will be entered in the job_id column.
+    =>  create table jobs
+        (job_id varchar(10) primary key,
+        job_title varchar(50), min_sal decimal(8,2),
+        max_sal decimal(8,2));
+    =>insert into jobs
+        values ('AD_PRES', 'President', 20000, 40000),
+        ('AD_VP', 'Administration Vice President', 15000, 30000),
+        ('AD_ASST', 'Administration Assistant', 3000, 6000),
+        ('FI_MGR', 'Finance Manager', 8200, 16000),
+        ('FI_ACCOUNT', 'Accountant', 4200, 9000),
+        ('AC_MGR', 'Accounting Manager', 8200, 16000),
+        ('AC_ACCOUNT', 'Public Accountant', 4200, 9000),
+        ('SA_MAN', 'Sales Manager', 10000, 20000);
+
+
+4. Write SQL statement to increment salary of each emp by 10%.
+    => update employee set salary=salary*1.1;
+
+
+5. Write a SQL statement to change the email column of employees table with 'not
+    available' for those employees whose department_id is 80 and gets a
+    commission is less than .20%
+
+    => update employee set email="not available" where dept_id=80 and commission_pct < 0.20;
+    ERROR: Duplicate entry 'not available' for key 'employee.email'
+
+
+6. Write a SQL statement to change the email column of employees table with 'not
+    available' for those employees who belongs to the 'Purchasing' department.
+    => update employee set email="not available" where
+        dept_id in (select dept_id from department where d_name="purchasing");
+
+
+7. Write a SQL statement to change the email and commission_pct column of
+    employees table with 'not available' and 0.10 for all employees.
+    => alter table employee
+        drop index email;
+
+    => update employee set email="not available",commission_pct=0.10;

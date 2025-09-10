@@ -1,15 +1,16 @@
-import datetime
+import datetime, textwrap
 from tabulate import tabulate
 from colorama import Fore, Style
 from validation_path import path
-from transactions import Transaction
+from logs import Logs
 
 class PaymentMangement:
     headers = ["ID", "Name", "Branch", "Age", "Address", "Phone", "Fine", "Status"]
-    t_headers = ["Transaction Id", "Amount", "User Id", "Transaction Date", "Payment Type"]
+    log_headers = ["Log Id", "Action", "Details", "Timestamp"]
+
     def pay_fine(self):
         table_data = []
-        user_id = input("Enter the user id:-")
+        user_id = input("Enter the member id:-")
         try:
             with open(path + "member.txt", "r") as fp:
                 mData = fp.read()
@@ -26,9 +27,8 @@ class PaymentMangement:
                     
                     amount = float(input("Enter the Amount:-"))
                     date = str(datetime.date.today())
-                    ptype = input("Enter payment type:-")
+                    ptype = input("Enter payment type(Fine / Pending fees):-")
 
-                    t1 = Transaction(amount, user_id, date, ptype)
 
                     memberList[6] = float(memberList[6]) - amount
                     if memberList[6] == 0:
@@ -39,19 +39,21 @@ class PaymentMangement:
                     with open(path + "member.txt", "w") as fp:
                         fp.write(data)
                         
-                    with open(path + "transactions.txt", 'a') as fp:
+                    t1 = Logs(ptype, f"Pay fine {amount} by member {user_id}")
+
+                    with open(path + "logs.txt", 'a') as fp:
                         fp.write(str(t1)+"\n")
-                        print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Pay Fine Transaction..." + Style.RESET_ALL)
+                        print(Style.BRIGHT + Fore.LIGHTBLUE_EX + "✅ Successfully Pay Fine..." + Style.RESET_ALL)
                         break
             else:
                 print(Style.BRIGHT + Fore.RED + "⚠️  Member not found." + Style.RESET_ALL)
                 
                 return
             
-    def show_all_transaction(self):
+    def show_all_logs(self):
         table_data = []
         try:
-            with open(path + "transactions.txt", "r") as fp:
+            with open(path + "logs.txt", "r") as fp:
                 allData = fp.read()
 
         except FileNotFoundError as e:
@@ -62,9 +64,7 @@ class PaymentMangement:
             for value in tdata:
                 if value != "":
                     row = value.split(', ')
+                    row[2] = textwrap.fill(row[2],width=15)
                     table_data.append(row)
 
-            print(tabulate(table_data, headers=PaymentMangement.t_headers, tablefmt="fancy_grid"))
-
-
-        
+            print(tabulate(table_data, headers=PaymentMangement.log_headers, tablefmt="fancy_grid"))

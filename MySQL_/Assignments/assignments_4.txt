@@ -1,0 +1,106 @@
+1. Write a query to display the names (first_name, last_name) using alias
+    name “First Name", "Last Name.
+    => select fname as "first name", lname as "last name" from employee;
+
+
+2. Write a query to get unique department ID from employee table.
+    => select dept_id from employee group by dept_id;
+
+
+3. Write a query to get all employee details from the employee table order
+    by first name, descending
+    => select * from employee order by fname desc;
+
+
+4. Write a query to get the names (first_name, last_name), salary, PF of all
+    the employees (PF is calculated as 15% of salary).
+    =>  select fname,lname,salary,(salary*0.15) as PF from employee;
+
+
+5. Write a query to get the employee ID, names (first_name, last_name),
+    salary in ascending order of salary.
+    => select eid, fname,lname,salary from employee order by salary;
+
+
+6. Write a query to get the total salaries payable to employees.
+    => select sum(salary) from employee;
+
+
+7. Write a query to get the maximum and minimum salary from employees
+    table.
+    => select min(salary) as "minimum salary",
+        max(salary) as "maximum salary" from employee;
+
+
+8. Write a query to get the average salary and number of employees in the
+    employees table.
+    => select count(*) as "no_of_emp",avg(salary) from employee;
+
+
+9. Write a query to get the number of employees working with the
+    company.
+    => select count(*) as "no_of_emp" from employee;
+
+
+10. Write a query to get the number of jobs available in the employees table
+    => select job_id,count(*) as "jobs" from employee group by job_id;
+
+
+11. Write a query to select first 10 records from a table.
+    => select * from employee limit 5;
+
+
+12. Write a query to display the name (first_name, last_name) and salary for
+    all employees whose salary is not in the range $10,000 through $15,000
+    => select fname,lname,salary from employee where salary between 10000 and 15000;
+
+
+13. Write a query to display the name (first_name, last_name) and
+    department ID of all employees in departments 30 or 100 in ascending
+    order.
+    => select fname,lname,dept_id from employee where dept_id in (30,60) order by dept_id;
+
+
+14. Write a query to display the name (first_name, last_name) and salary for
+    all employees whose salary is not in the range $10,000 through $15,000
+    and are in department 30 or 100.
+    => select fname,lname,salary from employee where 
+        dept_id in (30,80) and salary not between 10000 and 15000;
+
+
+15. Write a query to display the name (first_name, last_name) and hire date
+    for all employees who were hired in 1987.
+    => select fname,lname, hire_date from employee where year(hire_date)=1987;
+
+
+16. Write a query to display the first_name of all employees who have both
+    "b" and "c" in their first name
+    =>  select fname from employee where fname like "%b%" and fname like "%c%";
+
+
+17. Write a query to display the last name, job, and salary for all employees
+    whose job is that of a Programmer or a Shipping Clerk, and whose salary
+    is not equal to $4,500, $10,000, or $15,000.
+
+    => select lname,job_id,salary from employee where 
+        job_id in ("it_prog","sa_man") and salary not in (4500,10000,15000);
+
+
+18. Write a query to display the last name of employees whose names have
+    exactly 6 characters.
+    => select lname from employee where length(lname)=6;
+
+
+19. Write a query to display the last name of employees having 'e' as the third
+    character.
+    => select lname from employee where lname like "__e%";
+
+
+20. Write a query to display the jobs/designations available in the employees
+    table.
+    => select job_id from employee group by job_id;
+
+
+21. Write a query to select all record from employees where last name in
+    'BLAKE', 'SCOTT', 'KING' and 'FORD'
+    => select * from employee where lname in ('BLAKE', 'SCOTT', 'KING','FORD');
