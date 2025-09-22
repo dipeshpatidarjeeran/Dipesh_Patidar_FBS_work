@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #c1dff7;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        }
+        
+    </style>
+</head>
+<body>
+     <center>
+        <h1>Show all Students</h1>
+        <a href="/addStudent"><button>Add Student</button></a>
+        </hr>
+        </hr>
+            <table border="1">
+                <tr>
+                    <td>Sid</td>
+                    <td>Name</td>
+                    <td>Age</td>
+                    <td>Percentage</td>
+                    <td>Course</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                </tr>
+                {%for stu in studs%}
+                <tr>
+                    <td>{{stu[4]}}</td>
+                    <td>{{stu[0]}}</td>
+                    <td>{{stu[1]}}</td>
+                    <td>{{stu[2]}}</td>
+                    <td>{{stu[3]}}</td>
+                    <td><a href="/editStudent/{{stu[4]}}"><button>Edit</button></a></td>
+                    <td><a href="/deleteStudent/{{stu[4]}}"><button>Delete</button></a></td>
+
+                </tr>
+                {%endfor%}
+                
+                
+            </table>
+    </center>
+</body>
+</html>

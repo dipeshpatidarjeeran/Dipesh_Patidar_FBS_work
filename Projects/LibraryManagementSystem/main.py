@@ -7,7 +7,7 @@ ch = 0
 banner = figlet_format("L M S", font="slant")
 print(Fore.CYAN + Style.BRIGHT + banner + Style.RESET_ALL)
 print("📚📖📘 Welcome to Library Management System 📘📖📚")
-
+ 
 while(ch != '2'):
     print(Fore.YELLOW + Style.BRIGHT + """📋 Please select choice:
             1. 🔐 login

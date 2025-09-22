@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #c1dff7;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        }
+        
+    </style>
+</head>
+<body >
+    <center>
+        <h1>Update Students</h1>
+        <form method="post">
+            <table border="1">
+                <tr>
+                    <td>Student Name</td>
+                    <td><input type="text" name="sname" value="{{stud[0]}}" required /></td>
+                </tr>
+                <tr>
+                    <td>Student age</td>
+                    <td><input type="text" name="age" value="{{stud[1]}}" required /></td>
+                </tr>
+                <tr>
+                    <td>Percentage</td>
+                    <td><input type="text" name="per" value="{{stud[2]}}" required /></td>
+                </tr>
+                <tr>
+                    <td>Course</td>
+                    <td><input type="text" name="course" value="{{stud[3]}}" required /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Update student" /></td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</body>
+</html>

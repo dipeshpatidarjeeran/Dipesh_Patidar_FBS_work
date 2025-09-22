@@ -4,9 +4,12 @@ if __name__ == '__main__':
     con = mysql.connector.connect(host="localhost",user="root",password="asdf@123",database='MyFlaskDb')
     Id = int(input("enter the student id:-"))
     sname = input("update the name:-")
+    age = int(input("enter the age:-"))
+    per = float(input("enter the percentage:-"))
+    course = input("enter the course:-")
 
-    sql = """update students set sname=%s where sid = %s"""
-    val = (sname, Id)
+    sql = "update students set sname=%s,age=%s,percentage=%s,course=%s where sid=%s"
+    val = (sname,age,per,course,Id)
     cursor = con.cursor()
     cursor.execute(sql, val)
     con.commit()

@@ -14,7 +14,7 @@ class MemberManagement:
         new_id = valid_member_id(Id)
         name = get_input("Enter the Member Name:-")
         name = valid_name(name)
-        branch = get_input("Enter the Branch:-")
+        branch = get_input("Enter the Profession:-")
         age = int(get_input("Enter the Age:-"))
         address = get_input("Enter the Address:-")
         new_phone = get_input("Enter the Phone Number:-")

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Show All Category</h1>
+        <a href="/addCategory"><button>Add New Category</button></a>
+        <hr/>
+        <table border="1">
+            <tr>
+                <td>Cid</td>
+                <td>Category Name</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+            {% for cat in cats %}
+            <tr>
+                <td>{{cat[0]}}</td>
+                <td>{{cat[1]}}</td>
+                <td><a href="/updateCategory/{{cat[0]}}"><button>Edit</button></a></td>
+                <td><a href="/deleteCategory/{{cat[0]}}"><button>Delete</button></a></td>
+            </tr>
+            {%endfor%}
+        </table>
+    </center>
+</body>
+</html>

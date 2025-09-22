@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #c1dff7;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        }
+        
+    </style>
+</head>
+<body>
+    <center>
+        <h2>Show all Books </h2>
+        <a href="/addBook"><button>Add Book</button></a>
+    </hr>
+    <hr>
+        <table border="2">
+            <tr>
+                <td>Book ID</td>
+                <td>Book Name</td>
+                <td>Book Price</td>
+                <td>Author Name</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+            {% for book in books %}
+            <tr>
+                <td>{{book[0]}}</td>
+                <td>{{book[1]}}</td>
+                <td>{{book[2]}}</td>
+                <td>{{book[3]}}</td>
+                <td><a href="/editBook/{{book[0]}}"><button>Edit</button></a></td>
+                <td><a href="/deleteBook/{{book[0]}}"><button>Delete</button></a></td>
+            </tr>
+            {%endfor%}
+        </table>
+    </center>
+</body>
+</html>
