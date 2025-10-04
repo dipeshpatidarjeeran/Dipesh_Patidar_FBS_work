@@ -1,0 +1,53 @@
+<!-- Question 1: Create an HTML page that uses the following tags and attributes:
+<table> <tr> <td> <th> with attritibutes like colspan,rowspan,border,cellspacing ,cellpadding. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="3" cellspecing="10" cellpadding="10">
+        <thead>
+            <tr>
+                <th colspan="5">Student tables</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RollNo</td>
+                <td>Name</td>
+                <td>Cource</td>
+                <td>Percentage</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Dipesh</td>
+                <td>MCA</td>
+                <td>76</td>
+                
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ram</td>
+                <td>BBA</td>
+                <td>87</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td rowspan="2">Suraj</td>
+                <td rowspan="2">BCA</td>
+                <td>88</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <!-- <td>Suraj</td> -->
+                <!-- <td>BCA</td> -->
+                <td>66</td>
+            </tr>     
+        </tbody>
+    </table>
+</body>
+</html>

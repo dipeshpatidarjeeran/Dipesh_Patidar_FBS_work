@@ -1,0 +1,9 @@
+Order ID,Customer,Product,Category,Quantity,Price,Total Sales
+1001,Alice,Laptop,Electronics,2,800,1600
+1002,Bob,Phone,Electronics,1,500,500
+1003,Charlie,Chair,Furniture,4,100,400
+1004,Alice,Table,Furniture,1,250,250
+1005,David,Laptop,Electronics,1,800,800
+1006,Charlie,Phone,Electronics,2,500,1000
+1007,Bob,Chair,Furniture,2,100,200
+1008,Alice,Phone,Electronics,1,500,500
